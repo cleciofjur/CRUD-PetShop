@@ -37,8 +37,8 @@ public class Usuario {
 		return cargo;
 	}
 	
-	void autenticar () {
-		
+	public boolean autenticar (String nomeTentaiva, String senhaTentativa) {
+		return this.nome.equals(nomeTentaiva) && this.senha.equals(senhaTentativa);
 	}
 }
 

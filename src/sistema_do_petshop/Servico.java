@@ -1,21 +1,42 @@
 package sistema_do_petshop;
 
 public class Servico {
-	String tipo;
+	private String tipo;
 	private Double preco;
-	String descricao;
+	private String descricao;
 	
-	Servico (){}
-	
-	Servico (Double preco) {
+	public Servico(String tipo, Double preco, String descricao) {
+		super();
+		this.tipo = tipo;
 		this.preco = preco;
-	} 
-	
-	public void setPreco (Double preco) {
+		this.descricao = descricao;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public Double getPreco() {
+		return preco;
+	}
+
+	public void setPreco(Double preco) {
 		this.preco = preco;
 	}
-	
-	public Double getPreco () {
-		return preco;
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public void exibirServico() {
+		System.out.println("Serviço: " +tipo+ "\nPreço: R$ " +preco+ "\nDescrição: ");
 	}
 }
