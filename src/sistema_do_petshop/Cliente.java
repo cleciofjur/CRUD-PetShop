@@ -4,9 +4,7 @@ public class Cliente {
 	private String nome;
 	private Integer telefone;
 	private String email;
-	
-	Cliente() {}
-	
+
 	Cliente (String nome, Integer telefone, String email) {
 		this.nome = nome;
 		this.telefone = telefone;
