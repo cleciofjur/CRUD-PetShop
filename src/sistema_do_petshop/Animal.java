@@ -4,7 +4,11 @@ public class Animal {
 	private String nome;
 	private String especie;
 	private String raca;
+	// É a declaração de um atributo privado que faz associação ou referência a outro objeto de uma outra classe
 	private Cliente dono;
+	// private -> modificador de acesso
+	// Cliente -> define quec Cliente não é um tipo primitivo, mas sim uma instância de uma classe chamada Cliente
+	// dono -> é o nome da varivel que receberá o objeto de Cliente
 		
 	Animal (String nome, String especie, String raca, Cliente dono) {
 		this.nome = nome;
