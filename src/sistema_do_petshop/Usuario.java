@@ -5,9 +5,6 @@ public class Usuario {
 	private String senha;
 	private String cargo;
 	
-	// Construtor com parametro vazio
-	Usuario() {}
-
 	// Construtor com a passagem de parâmetro
 	Usuario (String nome, String senha, String cargo) {
 		this.nome = nome; // "this" faz referência ao atributo da classe
