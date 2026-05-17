@@ -18,4 +18,9 @@ public class Servico {
 	public Double getPreco () {
 		return preco;
 	}
+
+	public boolean disponivel(int hour) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
