@@ -2,12 +2,12 @@ package sistema_do_petshop;
 
 public class Cliente {
 	private String nome;
-	private Integer telefone;
+	private String tel;
 	private String email;
 
-	Cliente (String nome, Integer telefone, String email) {
+	Cliente (String nome, String tel, String email) {
 		this.nome = nome;
-		this.telefone = telefone;
+		this.tel = tel;
 		this.email = email;
 	}
 	
@@ -19,12 +19,12 @@ public class Cliente {
 		return nome;
 	}
 	
-	public void setTelefone (Integer telefone) {
-		this.telefone = telefone;
+	public void setTelefone (String tel) {
+		this.tel = tel;
 	}
 	
-	public Integer getTelefone () {
-		return telefone;
+	public String getTel () {
+		return tel;
 	}
 	
 	public void setEmail (String email) {
