@@ -5,6 +5,10 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class TelaLogin extends JFrame implements ActionListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	JLabel lblUsuario, lblSenha, lblMensagem;
 	JTextField txtUsuario;
 	JPasswordField txtSenha;
