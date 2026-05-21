@@ -14,6 +14,7 @@ public class Animal {
 		this.nome = nome;
 		this.especie = especie;
 		this.raca = raca;
+		this.dono = dono;
 	}
 	
 	public void setNome (String nome) {
