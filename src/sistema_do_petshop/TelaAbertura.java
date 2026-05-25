@@ -56,7 +56,6 @@ public class TelaAbertura implements ActionListener {
         // Define cor de fundo do painel
         painel.setBackground(new Color(5, 63, 92));
 
-        // ── Configuração do título ───────────────────
 
         lbtitulo.setBounds(60, 30, 380, 40);
 
@@ -64,7 +63,6 @@ public class TelaAbertura implements ActionListener {
 
         lbtitulo.setForeground(new Color(247, 173, 25));
 
-        // ── Configuração do subtítulo ────────────────
 
         lbsubtitulo.setBounds(100, 72, 300, 25);
 
@@ -72,7 +70,6 @@ public class TelaAbertura implements ActionListener {
 
         lbsubtitulo.setForeground(new Color(159, 231, 245));
 
-        // ── Labels dos serviços ──────────────────────
 
         lblBanho.setBounds(150, 150, 220, 30);
 
@@ -92,7 +89,6 @@ public class TelaAbertura implements ActionListener {
 
         lblConsulta.setForeground(Color.WHITE);
 
-        // ── Configuração do botão Entrar ─────────────
 
         btsalvar.setBounds(120, 320, 100, 30);
 
@@ -105,7 +101,6 @@ public class TelaAbertura implements ActionListener {
         // Remove o efeito de foco ao clicar
         btsalvar.setFocusPainted(false);
 
-        // ── Configuração do botão Sair ───────────────
 
         btexibir.setBounds(240, 320, 100, 30);
 

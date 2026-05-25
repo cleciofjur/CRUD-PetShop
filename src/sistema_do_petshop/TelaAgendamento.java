@@ -1,6 +1,5 @@
 package sistema_do_petshop;
 
-// Importações das classes necessárias para eventos, interface gráfica e listas
 import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -8,12 +7,8 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.awt.Font;
 
-// Classe da tela de agendamento
-// JFrame -> cria uma janela gráfica
-// ActionListener -> permite capturar eventos de clique
 public class TelaAgendamento extends JFrame implements ActionListener {
 
-    // Controle de serialização da classe
     private static final long serialVersionUID = 1L;
 
     // Constantes de cores utilizadas na interface
@@ -23,75 +18,73 @@ public class TelaAgendamento extends JFrame implements ActionListener {
     private static final Color COR_AZUL_CLARO = new Color(159, 231, 245);
     private static final Color COR_BRANCO     = Color.WHITE;
 
-    // Constantes de posicionamento e tamanho dos componentes
+    // Constantes de posicionamento dos componentes
     private static final int LBL_X = 20;
     private static final int LBL_W = 140;
     private static final int LBL_H = 25;
     private static final int TXT_X = 170;
     private static final int TXT_W = 180;
-    private static final int BTN_W = 130;
-    private static final int BTN_H = 30;
+    private static final int BTN_H = 32;
 
-    // Componentes gráficos da interface
+    // Labels da interface
     JLabel lblAnimal, lblDono, lblServico, lblData, lblHorario;
+
+    // Campos de texto
     JTextField txtDono, txtData, txtHorario;
 
-    // JComboBox -> caixa de seleção suspensa
+    // Caixas de seleção suspensa
     JComboBox<String> cmbAnimal;
     JComboBox<String> cmbServico;
 
-    // Área onde os resultados e mensagens serão exibidos
+    // Área de exibição de resultados
     JTextArea areaExibicao;
 
-    // Botões da tela
-    JButton btnAgendar, btnExcluir, btnConsultar, btnListarTodos, btnVoltar;
+    JButton btnAgendar, btnExcluir, btnConsultarAgenda, btnVoltar;
 
-    // Lista de animais cadastrados
+    // Lista de animais recebida da tela principal
     ArrayList<Animal> listaAnimais;
 
-    // Lista de agendamentos realizados
+    // Lista de agendamentos criados nesta tela
     ArrayList<Agendamento> listaAgendamentos;
 
-    // Método construtor
+    // Construtor da tela
     public TelaAgendamento(ArrayList<Animal> listaAnimais) {
 
-        // Recebe a lista de animais da tela anterior
+        // Recebe a lista de animais cadastrados na tela anterior
         this.listaAnimais = listaAnimais;
 
-        // Inicializa lista de agendamentos vazia
+        // Inicializa a lista de agendamentos vazia
         this.listaAgendamentos = new ArrayList<>();
 
-        // Configurações da janela
         setTitle("Sistema Pet Shop - Agendamento de Serviços");
         setSize(700, 560);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
 
-        // Criação do painel principal
         JPanel painel = new JPanel();
         painel.setLayout(null);
         painel.setBackground(COR_FUNDO);
         setContentPane(painel);
 
-        // ── Título da tela ─────────────────────────────
-
+        // Título principal da tela
         JLabel lblTitulo = new JLabel("📅  Agendamento de Serviços");
         lblTitulo.setBounds(20, 15, 400, 30);
         lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 18));
         lblTitulo.setForeground(COR_AMBAR);
         painel.add(lblTitulo);
 
+        // Subtítulo explicativo
         JLabel lblSub = new JLabel("Selecione o animal e o serviço desejado");
         lblSub.setBounds(20, 45, 400, 18);
         lblSub.setFont(new Font("Segoe UI", Font.PLAIN, 11));
         lblSub.setForeground(COR_AZUL_CLARO);
         painel.add(lblSub);
 
-        // ── Labels ────────────────────────────────────
-
+        // Posições verticais de cada linha do formulário
         int[] linhasY = {80, 115, 150, 185, 220};
 
+        // Textos de cada label do formulário
         String[] nomes = {
             "Animal:",
             "Dono:",
@@ -100,18 +93,16 @@ public class TelaAgendamento extends JFrame implements ActionListener {
             "Horário (hh:mm):"
         };
 
-        // FOR -> cria todos os labels automaticamente
+        // Cria todos os labels automaticamente usando FOR
         for (int i = 0; i < nomes.length; i++) {
 
             JLabel lbl = new JLabel(nomes[i]);
-
             lbl.setBounds(LBL_X, linhasY[i], LBL_W, LBL_H);
             lbl.setFont(new Font("Segoe UI", Font.BOLD, 13));
             lbl.setForeground(COR_BRANCO);
-
             painel.add(lbl);
 
-            // switch -> identifica qual label está sendo criado
+            // Associa cada label criado à variável correspondente
             switch (i) {
                 case 0: lblAnimal  = lbl; break;
                 case 1: lblDono    = lbl; break;
@@ -121,148 +112,126 @@ public class TelaAgendamento extends JFrame implements ActionListener {
             }
         }
 
-        // ── Campos e JComboBox ────────────────────────
-
-        // ComboBox para selecionar animal
+        // ComboBox para selecionar o animal cadastrado
         cmbAnimal = new JComboBox<>();
 
-        // FOR EACH -> percorre todos os animais da lista
+        // Percorre a lista e adiciona cada animal ao ComboBox
         for (Animal a : listaAnimais)
             cmbAnimal.addItem(a.getNome());
 
         cmbAnimal.setBounds(TXT_X, linhasY[0], TXT_W, LBL_H);
-
         painel.add(cmbAnimal);
 
-        // Campo dono (não editável)
+        // Campo do dono preenchido automaticamente (não editável)
         txtDono = new JTextField();
-
         txtDono.setEditable(false);
-
         txtDono.setBounds(TXT_X, linhasY[1], TXT_W, LBL_H);
-
         txtDono.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-
         txtDono.setBorder(new LineBorder(COR_AZUL_MEDIO, 1));
-
         painel.add(txtDono);
 
-        // ComboBox de serviços
+        // ComboBox com os tipos de serviço disponíveis
         cmbServico = new JComboBox<>();
-
         cmbServico.addItem("Banho");
         cmbServico.addItem("Tosa");
         cmbServico.addItem("Consulta Veterinária");
-
         cmbServico.setBounds(TXT_X, linhasY[2], TXT_W, LBL_H);
-
         painel.add(cmbServico);
 
-        // Campos de data e horário
-        txtData = criarCampo(linhasY[3]);
-        painel.add(txtData);
-
+        // Campos de data e horário do agendamento
+        txtData    = criarCampo(linhasY[3]);
         txtHorario = criarCampo(linhasY[4]);
+        painel.add(txtData);
         painel.add(txtHorario);
 
-        // ── Botões ────────────────────────────────────
+        // ── Botões ──────────────────────────────────────────────────────────
+        // MUDANÇA 3: Botões organizados em duas fileiras centralizadas
+        //
+        // Fileira 1: Agendar | Excluir | Consultar Agenda  (3 botões iguais)
+        // Fileira 2: Voltar                                 (centralizado)
 
-        btnAgendar     = criarBotao("Agendar", COR_AMBAR, COR_FUNDO);
-        btnExcluir     = criarBotao("Excluir", COR_AZUL_MEDIO, COR_BRANCO);
-        btnConsultar   = criarBotao("Consultar", COR_AZUL_MEDIO, COR_BRANCO);
-        btnListarTodos = criarBotao("Listar Todos", COR_AZUL_MEDIO, COR_BRANCO);
+        // Calcula posição inicial para centralizar 3 botões na janela de 700px
+        // Largura de cada botão: 190px | Espaço entre eles: 10px
+        // Total: 3 * 190 + 2 * 10 = 590  →  margem: (700 - 590) / 2 = 55
+        int btnLargura = 190;
+        int espacamento = 10;
+        int xInicio = 55;
 
-        btnAgendar.setBounds(20, 265, BTN_W, BTN_H);
-        btnExcluir.setBounds(160, 265, BTN_W, BTN_H);
-        btnConsultar.setBounds(300, 265, BTN_W, BTN_H);
-        btnListarTodos.setBounds(440, 265, BTN_W, BTN_H);
+        // Cria os três botões da fileira principal
+        btnAgendar        = criarBotao("Agendar",          COR_AMBAR,      COR_FUNDO);
+        btnExcluir        = criarBotao("Excluir",          COR_AZUL_MEDIO, COR_BRANCO);
+
+        // MUDANÇA 2: "Consultar" renomeado para "Consultar Agenda"
+        btnConsultarAgenda = criarBotao("Consultar Agenda", COR_AZUL_MEDIO, COR_BRANCO);
+
+        // Posiciona os botões da fileira 1
+        btnAgendar.setBounds(xInicio, 265, btnLargura, BTN_H);
+        btnExcluir.setBounds(xInicio + btnLargura + espacamento, 265, btnLargura, BTN_H);
+        btnConsultarAgenda.setBounds(xInicio + (btnLargura + espacamento) * 2, 265, btnLargura, BTN_H);
 
         painel.add(btnAgendar);
         painel.add(btnExcluir);
-        painel.add(btnConsultar);
-        painel.add(btnListarTodos);
+        painel.add(btnConsultarAgenda);
 
-        // Botão voltar
+
         btnVoltar = criarBotao("← Voltar", COR_AZUL_MEDIO, COR_BRANCO);
-
-        btnVoltar.setBounds(20, 305, BTN_W, BTN_H);
-
+        btnVoltar.setBounds(250, 308, 200, BTN_H);
         painel.add(btnVoltar);
 
-        // ── Área de exibição ──────────────────────────
+        // ── Área de exibição ─────────────────────────────────────────────────
 
         areaExibicao = new JTextArea();
-
         areaExibicao.setEditable(false);
-
         areaExibicao.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-
         areaExibicao.setForeground(COR_FUNDO);
-
         areaExibicao.setBackground(new Color(240, 250, 255));
-
         areaExibicao.setBorder(new LineBorder(COR_AZUL_MEDIO, 1));
 
-        // JScrollPane -> adiciona barra de rolagem
+        // JScrollPane adiciona barra de rolagem à área de exibição
         JScrollPane scroll = new JScrollPane(areaExibicao);
-
-        scroll.setBounds(20, 350, 645, 165);
-
+        scroll.setBounds(20, 355, 645, 160);
         scroll.setBorder(new LineBorder(COR_AZUL_MEDIO, 1));
-
         painel.add(scroll);
 
-        // Eventos dos componentes
+        // Registra os eventos de clique de cada botão
         btnAgendar.addActionListener(this);
         btnExcluir.addActionListener(this);
-        btnConsultar.addActionListener(this);
-        btnListarTodos.addActionListener(this);
+        btnConsultarAgenda.addActionListener(this);
         btnVoltar.addActionListener(this);
 
-        // Evento para detectar troca de animal selecionado
+        // Detecta quando o animal selecionado no ComboBox muda
         cmbAnimal.addActionListener(this);
 
-        // Preenche automaticamente o nome do dono
+        // Preenche o campo dono assim que a tela abre
         preencherDono();
 
-        // Exibe a janela
         setVisible(true);
     }
 
-    // Método auxiliar para criar campos de texto padronizados
+    // Cria um campo de texto padronizado na posição Y informada
     private JTextField criarCampo(int y) {
-
         JTextField f = new JTextField();
-
         f.setBounds(TXT_X, y, TXT_W, LBL_H);
-
         f.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-
         f.setBorder(new LineBorder(COR_AZUL_MEDIO, 1));
-
         return f;
     }
 
-    // Método auxiliar para criar botões padronizados
+    // Cria um botão padronizado com texto, cor de fundo e cor do texto
     private JButton criarBotao(String texto, Color bg, Color fg) {
-
         JButton btn = new JButton(texto);
-
         btn.setBackground(bg);
-
         btn.setForeground(fg);
-
         btn.setFont(new Font("Segoe UI", Font.BOLD, 12));
-
         btn.setFocusPainted(false);
-
         return btn;
     }
 
-    // Método executado ao clicar em algum botão
+    // Método executado automaticamente ao clicar em qualquer botão registrado
     @Override
     public void actionPerformed(ActionEvent e) {
 
+        // Atualiza o campo dono quando o animal selecionado muda
         if (e.getSource() == cmbAnimal)
             preencherDono();
 
@@ -272,206 +241,147 @@ public class TelaAgendamento extends JFrame implements ActionListener {
         if (e.getSource() == btnExcluir)
             excluirAgendamento();
 
-        if (e.getSource() == btnConsultar)
-            consultarAgendamento();
+        // MUDANÇA 2: Agora chama consultarAgenda() no lugar de consultarAgendamento()
+        if (e.getSource() == btnConsultarAgenda)
+            consultarAgenda();
 
-        if (e.getSource() == btnListarTodos)
-            listarTodos();
-
-        // Volta para tela principal
+        // Volta para a tela principal ao clicar em Voltar
         if (e.getSource() == btnVoltar) {
-
             dispose();
-
             new TelaPrincipal();
         }
+
     }
 
-    // Preenche automaticamente o nome do dono do animal selecionado
+    // Preenche o campo "Dono" automaticamente com base no animal selecionado
     private void preencherDono() {
 
+        // getSelectedIndex() retorna a posição do item selecionado no ComboBox
         int indice = cmbAnimal.getSelectedIndex();
 
-        // Verifica se o índice é válido
+        // Verifica se o índice é válido antes de acessar a lista
         if (indice >= 0 && indice < listaAnimais.size()) {
-
-            txtDono.setText(
-                listaAnimais.get(indice).getDono().getNome()
-            );
-
+            txtDono.setText(listaAnimais.get(indice).getDono().getNome());
         } else {
-
             txtDono.setText("");
         }
     }
 
-    // Método responsável por realizar o agendamento
+    // Cria e salva um novo agendamento com os dados preenchidos
     private void agendarServico() {
 
         int indice = cmbAnimal.getSelectedIndex();
 
-        // Verifica se existe animal disponível
+        // Verifica se há animais disponíveis para agendar
         if (indice < 0 || listaAnimais.isEmpty()) {
-
-            areaExibicao.setText(
-                "Nenhum animal disponível para agendar."
-            );
-
+            areaExibicao.setText("Nenhum animal disponível para agendar.");
             return;
         }
 
-        String data = txtData.getText().trim();
-
+        String data    = txtData.getText().trim();
         String horario = txtHorario.getText().trim();
 
-        // Verifica campos vazios
+        // Verifica se data e horário foram preenchidos
         if (data.isEmpty() || horario.isEmpty()) {
-
-            areaExibicao.setText(
-                "Preencha a data e o horário."
-            );
-
+            areaExibicao.setText("Preencha a data e o horário.");
             return;
         }
 
-        // Obtém animal selecionado
+        // Obtém o animal e o serviço selecionados
         Animal animalSelecionado = listaAnimais.get(indice);
+        String tipoServico       = (String) cmbServico.getSelectedItem();
 
-        // Obtém serviço selecionado
-        String tipoServico = (String) cmbServico.getSelectedItem();
-
-        // Cria objeto Serviço
-        Servico servico = new Servico(tipoServico, 0.0, "");
-
-        // Cria objeto Agendamento
+        // Cria os objetos necessários para o agendamento
+        Servico servico      = new Servico(tipoServico, 0.0, "");
         Agendamento agendamento = new Agendamento(
-            animalSelecionado,
-            servico,
-            data,
-            horario,
-            "Agendado"
+            animalSelecionado, servico, data, horario, "Agendado"
         );
 
-        // Adiciona na lista
+        // Adiciona o agendamento na lista
         listaAgendamentos.add(agendamento);
 
-        // Exibe mensagem de sucesso
+        // Exibe mensagem de confirmação
         areaExibicao.setText(
             "Agendamento realizado com sucesso!\n" +
-            "Animal: " + animalSelecionado.getNome() +
+            "Animal: "  + animalSelecionado.getNome() +
             " | Serviço: " + tipoServico +
-            " | Data: " + data + " às " + horario
+            " | Data: "    + data +
+            " às "         + horario
         );
 
         limparCampos();
     }
 
-    // Exclui um agendamento pelo nome do animal
     private void excluirAgendamento() {
 
-        String nomeAnimal =
-            (String) cmbAnimal.getSelectedItem();
+        // Obtém o nome do animal selecionado no ComboBox
+        String nomeAnimal = (String) cmbAnimal.getSelectedItem();
 
-        for (int i = 0; i < listaAgendamentos.size(); i++) {
-
-            if (listaAgendamentos.get(i)
-                .getAnimal()
-                .getNome()
-                .equalsIgnoreCase(nomeAnimal)) {
-
-                listaAgendamentos.remove(i);
-
-                areaExibicao.setText(
-                    "Agendamento de '" + nomeAnimal +
-                    "' excluído com sucesso!"
-                );
-
-                return;
-            }
-        }
-
-        areaExibicao.setText(
-            "Nenhum agendamento encontrado para '" +
-            nomeAnimal + "'."
-        );
-    }
-
-    // Consulta agendamentos de um animal
-    private void consultarAgendamento() {
-
-        String nomeAnimal =
-            (String) cmbAnimal.getSelectedItem();
-
-        StringBuilder resultado = new StringBuilder();
-
-        // Percorre todos os agendamentos
-        for (Agendamento ag : listaAgendamentos) {
-
-            if (ag.getAnimal().getNome()
-                .equalsIgnoreCase(nomeAnimal)) {
-
-                resultado.append("Animal: ")
-                        .append(ag.getAnimal().getNome())
-                        .append(" | Serviço: ")
-                        .append(ag.getServico().getTipo())
-                        .append(" | Data: ")
-                        .append(ag.getData())
-                        .append(" às ")
-                        .append(ag.getHorario())
-                        .append(" | Status: ")
-                        .append(ag.getStatus())
-                        .append("\n");
-            }
-        }
-
-        // Operador ternário
-        areaExibicao.setText(
-            resultado.length() == 0
-            ? "Nenhum agendamento encontrado para '" + nomeAnimal + "'."
-            : resultado.toString()
-        );
-    }
-
-    // Lista todos os agendamentos cadastrados
-    private void listarTodos() {
-
-        if (listaAgendamentos.isEmpty()) {
-
-            areaExibicao.setText(
-                "Nenhum agendamento cadastrado."
-            );
-
+        // Verifica se existe algum animal selecionado
+        if (nomeAnimal == null || nomeAnimal.isEmpty()) {
+            areaExibicao.setText("Selecione um animal para excluir o agendamento.");
             return;
         }
 
-        StringBuilder lista =
-            new StringBuilder("=== Agendamentos ===\n");
+        // Percorre a lista procurando o agendamento desse animal
+        for (int i = 0; i < listaAgendamentos.size(); i++) {
 
-        for (Agendamento ag : listaAgendamentos) {
+            // equalsIgnoreCase() compara sem diferenciar maiúsculas/minúsculas
+            if (listaAgendamentos.get(i).getAnimal().getNome()
+                    .equalsIgnoreCase(nomeAnimal)) {
 
-            lista.append("Animal: ")
-                 .append(ag.getAnimal().getNome())
-                 .append(" | Dono: ")
-                 .append(ag.getAnimal().getDono().getNome())
-                 .append(" | Serviço: ")
-                 .append(ag.getServico().getTipo())
-                 .append(" | Data: ")
-                 .append(ag.getData())
-                 .append(" às ")
-                 .append(ag.getHorario())
-                 .append(" | Status: ")
-                 .append(ag.getStatus())
-                 .append("\n");
+                // Remove o agendamento encontrado
+                listaAgendamentos.remove(i);
+
+                areaExibicao.setText(
+                    "Agendamento de '" + nomeAnimal + "' excluído com sucesso!"
+                );
+
+                return; // Sai do método após excluir
+            }
         }
 
-        areaExibicao.setText(lista.toString());
+        // Caso não encontre nenhum agendamento para esse animal
+        areaExibicao.setText(
+            "Nenhum agendamento encontrado para '" + nomeAnimal + "'."
+        );
+    }
+    
+    private void consultarAgenda() {
+        if (listaAgendamentos.isEmpty()) {
+            areaExibicao.setText("Nenhum agendamento cadastrado.");
+            return;
+        }
+
+        // StringBuilder monta o texto de forma eficiente
+        StringBuilder resultado = new StringBuilder();
+
+        // Percorre todos os agendamentos numerando cada um
+        for (int i = 0; i < listaAgendamentos.size(); i++) {
+
+            Agendamento ag = listaAgendamentos.get(i);
+
+            // Cabeçalho do bloco com número do agendamento
+            resultado.append("Agendamento ").append(i + 1).append(":\n");
+            resultado.append("  Animal   : ").append(ag.getAnimal().getNome()).append("\n");
+            resultado.append("  Dono     : ").append(ag.getAnimal().getDono().getNome()).append("\n");
+            resultado.append("  Serviço  : ").append(ag.getServico().getTipo()).append("\n");
+            resultado.append("  Data     : ").append(ag.getData()).append("\n");
+            resultado.append("  Horário  : ").append(ag.getHorario()).append("\n");
+            resultado.append("  Status   : ").append(ag.getStatus()).append("\n");
+
+            // Linha separadora entre agendamentos, exceto no último
+            if (i < listaAgendamentos.size() - 1) {
+                resultado.append("  -----------------------------------\n");
+            }
+        }
+
+        areaExibicao.setText(resultado.toString());
     }
 
-    // Limpa os campos de data e horário
+    // Limpa os campos de data e horário após um agendamento
     private void limparCampos() {
-
         txtData.setText("");
-
         txtHorario.setText("");
     }
 }
