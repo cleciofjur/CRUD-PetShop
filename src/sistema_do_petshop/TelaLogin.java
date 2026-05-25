@@ -85,6 +85,7 @@ public class TelaLogin extends JFrame implements ActionListener {
         lblMensagem.setBounds(80, 215, 280, 20);
         lblMensagem.setFont(new Font("Segoe UI", Font.PLAIN, 11));
         lblMensagem.setForeground(new Color(230, 57, 70));
+        add(lblMensagem);
         
         btnEntrar = new JButton("Entrar");
         btnEntrar.setBounds(110, 290, 100, 30);
