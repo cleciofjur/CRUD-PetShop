@@ -1,113 +1,158 @@
 package sistema_do_petshop;
 
 import java.awt.*;
+
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.border.*;
 
+// Declaração da classe TelaLogin
+// A classe herda JFrame, tornando-se uma janela gráfica
+// Também implementa ActionListener para capturar eventos dos botões
 public class TelaLogin extends JFrame implements ActionListener {
 
-	private static final long serialVersionUID = 1L;
-	JLabel lblUsuario, lblSenha, lblMensagem, lblImagem;
-	JLabel lblIconePessoa, lblIconeCadeado;
-	JTextField txtUsuario;
-	JPasswordField txtSenha;
-	JButton btnEntrar, btnLimpar;
-	Usuario usuarioValido;
+    // serialVersionUID é utilizado para controle de serialização da classe
+    // Evita problemas de compatibilidade entre versões da classe
+    private static final long serialVersionUID = 1L;
 
-	public TelaLogin(Usuario usuarioValido) {
-		this.usuarioValido = usuarioValido;
+    JLabel lblUsuario, lblSenha, lblMensagem, lblTitulo, lblPata;
+    JTextField txtUsuario;
+    JPasswordField txtSenha;
+    JButton btnEntrar, btnLimpar;
 
-		setTitle("Login - Pet Shop");
-		setSize(480, 420);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
-		setLayout(null);
+    // Objeto responsável por validar/autenticar o usuário
+    Usuario usuarioValido;
 
-		// fundo azul igual tela de abertura
-		getContentPane().setBackground(new Color(100, 180, 255));
+    // Método construtor da classe TelaLogin
+    // É executado automaticamente ao criar um objeto da classe
+    public TelaLogin(Usuario usuarioValido) {
 
-		// imagem de usuário centralizada no topo
-		ImageIcon icone = new ImageIcon("C:/Users/eluan/Downloads/CRUD-PetShop-main/CRUD-PetShop-main/src/Imagens/user-login-icon-png-1.png");
-		Image img = icone.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-		lblImagem = new JLabel(new ImageIcon(img));
-		lblImagem.setBounds(200, 20, 70, 70);
-		add(lblImagem);
+        // Armazena o objeto Usuario recebido no atributo da classe
+        this.usuarioValido = usuarioValido;
 
-		// label usuário
-		lblUsuario = new JLabel("Usuário:");
-		lblUsuario.setBounds(80, 160, 80, 25);
-		lblUsuario.setFont(new Font("Arial", Font.BOLD, 14));
-		lblUsuario.setForeground(Color.WHITE);
-		add(lblUsuario);
+        setTitle("Login - Pet Shop");
+        setSize(440, 400);
+        // Define que o programa será encerrado ao fechar a janela
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        // Define layout nulo
+        setLayout(null);
+        // Impede que o usuário redimensione a janela
+        setResizable(false);
+        getContentPane().setBackground(new Color(5, 63, 92));
 
-		// campo usuário
-		txtUsuario = new JTextField();
-		txtUsuario.setBounds(210, 160, 150, 25);
-		add(txtUsuario);
+        // Cria um JLabel com emoji e texto centralizado
+        lblPata = new JLabel("🐾 Pet Shop", SwingConstants.CENTER);
+        lblPata.setBounds(0, 20, 440, 35);
+        lblPata.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        lblPata.setForeground(new Color(247, 173, 25));
+        add(lblPata);
 
-		// label senha
-		lblSenha = new JLabel("Senha:");
-		lblSenha.setBounds(80, 210, 80, 25);
-		lblSenha.setFont(new Font("Arial", Font.BOLD, 14));
-		lblSenha.setForeground(Color.WHITE);
-		add(lblSenha);
+        lblTitulo = new JLabel("Sistema de Gestão", SwingConstants.CENTER);
+        lblTitulo.setBounds(0, 55, 440, 20);
+        lblTitulo.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        lblTitulo.setForeground(new Color(159, 231, 245));
+        add(lblTitulo);
 
-		// campo senha
-		txtSenha = new JPasswordField();
-		txtSenha.setBounds(210, 210, 150, 25);
-		add(txtSenha);
+        lblUsuario = new JLabel("Usuário:");
+        lblUsuario.setBounds(90, 120, 80, 25);
+        lblUsuario.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        lblUsuario.setForeground(Color.WHITE);
+        add(lblUsuario);
 
-		// mensagem de erro
-		lblMensagem = new JLabel("");
-		lblMensagem.setBounds(120, 250, 280, 25);
-		lblMensagem.setFont(new Font("Arial", Font.PLAIN, 12));
-		lblMensagem.setForeground(Color.RED);
-		add(lblMensagem);
+        txtUsuario = new JTextField();
+        txtUsuario.setBounds(180, 120, 170, 28);
+        txtUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        txtUsuario.setBorder(new LineBorder(new Color(66, 158, 189), 1));
+        add(txtUsuario);
 
-		// botão entrar - azul escuro com letra branca
-		btnEntrar = new JButton("Entrar");
-		btnEntrar.setBounds(110, 320, 110, 30);
-		btnEntrar.setBackground(new Color(30, 100, 180));
-		btnEntrar.setForeground(Color.WHITE);
-		btnEntrar.setFont(new Font("Arial", Font.BOLD, 14));
-		btnEntrar.setFocusPainted(false);
-		add(btnEntrar);
+        lblSenha = new JLabel("Senha:");
+        lblSenha.setBounds(90, 170, 80, 25);
+        lblSenha.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        lblSenha.setForeground(Color.WHITE);
+        add(lblSenha);
 
-		// botão limpar - cinza com letra branca
-		btnLimpar = new JButton("Limpar");
-		btnLimpar.setBounds(240, 320, 110, 30);
-		btnLimpar.setBackground(new Color(180, 180, 180));
-		btnLimpar.setForeground(Color.WHITE);
-		btnLimpar.setFont(new Font("Arial", Font.BOLD, 14));
-		btnLimpar.setFocusPainted(false);
-		add(btnLimpar);
+        txtSenha = new JPasswordField();
+        txtSenha.setBounds(180, 170, 170, 28);
+        txtSenha.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        txtSenha.setBorder(new LineBorder(new Color(66, 158, 189), 1));
+        add(txtSenha);
 
-		btnEntrar.addActionListener(this);
-		btnLimpar.addActionListener(this);
+        // Label inicialmente vazio
+        // Será usado para exibir mensagens de erro
+        lblMensagem = new JLabel("", SwingConstants.CENTER);
 
-		setVisible(true);
-	}
+        lblMensagem.setBounds(80, 215, 280, 20);
+        lblMensagem.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+        lblMensagem.setForeground(new Color(230, 57, 70));
+        
+        btnEntrar = new JButton("Entrar");
+        btnEntrar.setBounds(110, 290, 100, 30);
+        btnEntrar.setBackground(new Color(247, 173, 25));
+        btnEntrar.setForeground(new Color(5, 63, 92));
+        btnEntrar.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        btnEntrar.setFocusPainted(false);
+        add(btnEntrar);
 
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnEntrar) {
-			validarLogin();
-		}
-		if (e.getSource() == btnLimpar) {
-			txtUsuario.setText("");
-			txtSenha.setText("");
-			lblMensagem.setText("");
-		}
-	}
+        // Cria botão "Limpar"
+        btnLimpar = new JButton("Limpar");
+        btnLimpar.setBounds(225, 290, 100, 30);
+        btnLimpar.setBackground(new Color(66, 158, 189));
+        btnLimpar.setForeground(Color.WHITE);
+        btnLimpar.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        btnLimpar.setFocusPainted(false);
+        add(btnLimpar);
 
-	private void validarLogin() {
-		String loginDigitado = txtUsuario.getText();
-		String senhaDigitada = new String(txtSenha.getPassword());
+        btnEntrar.addActionListener(this);
+        btnLimpar.addActionListener(this);
+        getRootPane().setDefaultButton(btnEntrar);
+        setVisible(true);
+    }
 
-		if (usuarioValido.autenticar(loginDigitado, senhaDigitada)) {
-			dispose();
-			new TelaPrincipal();
-		} else {
-			lblMensagem.setText("Usuário ou senha incorretos!");
-		}
-	}
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        // Verifica se o botão clicado foi o btnEntrar
+        if (e.getSource() == btnEntrar) {
+            // Chama o método responsável por validar o login
+            validarLogin();
+        }
+
+        // Verifica se o botão clicado foi o btnLimpar
+        if (e.getSource() == btnLimpar) {
+            txtUsuario.setText("");
+            txtSenha.setText("");
+            lblMensagem.setText("");
+
+            // Faz o foco voltar para o componente
+            txtUsuario.requestFocus();
+        }
+    }
+
+    private void validarLogin() {
+
+        // Captura o texto digitado no campo usuário
+        String loginDigitado = txtUsuario.getText();
+
+        // Captura a senha digitada
+        // getPassword() retorna um vetor de caracteres (char[])
+        // new String(...) converte para String
+        String senhaDigitada = new String(txtSenha.getPassword());
+
+        // Chama o método autenticar da classe Usuario
+        // Verifica se login e senha estão corretos
+        if (usuarioValido.autenticar(loginDigitado, senhaDigitada)) {
+
+            // Fecha a tela de login atual
+            dispose();
+
+            // Abre a tela principal do sistema
+            new TelaPrincipal();
+
+        } else {
+
+            // Exibe mensagem de erro caso login ou senha estejam incorretos
+            lblMensagem.setText("⚠  Usuário ou senha incorretos!");
+        }
+    }
 }
