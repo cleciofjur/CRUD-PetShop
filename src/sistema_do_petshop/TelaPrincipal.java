@@ -2,9 +2,12 @@ package sistema_do_petshop;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,6 +21,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 
     private static final long serialVersionUID = 1L;
 
+    // Constantes das cores usadas no sistema
     private static final Color COR_FUNDO      = new Color(5, 63, 92);
     private static final Color COR_AZUL_MEDIO = new Color(66, 158, 189);
     private static final Color COR_AMBAR      = new Color(247, 173, 25);
@@ -29,12 +33,13 @@ public class TelaPrincipal extends JFrame implements ActionListener {
     JTextField txtNome, txtEspecie, txtRaca, txtDono, txtTelefone;
     JTextArea areaExibicao;
 
-    // MUDANÇA 1: Removidas as variáveis btnAlterarCor e btnAlterarFonte
     JButton btnAdicionar, btnExcluir, btnConsultar;
     JButton btnLimpar, btnAgendamento;
 
+    // Classe do Java que funciona como uma lista dinâmica
     ArrayList<Animal> listaAnimais;
 
+    // Constantes de posicionamento e tamanho de componentes da interface
     private static final int LBL_X = 20;
     private static final int LBL_W = 130;
     private static final int LBL_H = 25;
@@ -42,8 +47,31 @@ public class TelaPrincipal extends JFrame implements ActionListener {
     private static final int TXT_W = 190;
     private static final int BTN_H = 32;
 
+    // Detecta a melhor fonte com suporte a emoji disponível no sistema
+    private static Font getFonteComEmoji(int estilo, int tamanho) {
+        List<String> candidatas = Arrays.asList(
+            "Segoe UI Emoji",    // Windows
+            "Apple Color Emoji", // macOS
+            "Noto Color Emoji",  // Linux
+            "Segoe UI"           // fallback sem emoji
+        );
+
+        List<String> instaladas = Arrays.asList(
+            GraphicsEnvironment.getLocalGraphicsEnvironment()
+                               .getAvailableFontFamilyNames()
+        );
+
+        for (String nome : candidatas) {
+            if (instaladas.contains(nome)) {
+                return new Font(nome, estilo, tamanho);
+            }
+        }
+        return new Font("Dialog", estilo, tamanho);
+    }
+
     public TelaPrincipal() {
 
+    	// Prepara um espaço na memória para receber animais, até então esta vazia
         listaAnimais = new ArrayList<>();
 
         setTitle("Sistema Pet Shop - Cadastro de Animais");
@@ -59,7 +87,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 
         JLabel lblTitulo = new JLabel("🐾  Cadastro de Animais");
         lblTitulo.setBounds(20, 15, 400, 30);
-        lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        lblTitulo.setFont(getFonteComEmoji(Font.BOLD, 18));  // ← fonte com emoji
         lblTitulo.setForeground(COR_AMBAR);
         painel.add(lblTitulo);
 
@@ -73,6 +101,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
         String[] nomes = {"Nome do animal:", "Espécie:", "Raça:", "Nome do dono:", "Telefone:"};
         JLabel[] labels = new JLabel[5];
 
+        // Usa o for para criar todos os label de uma só vez, ssem precisar fazer um a um
         for (int i = 0; i < labels.length; i++) {
             labels[i] = new JLabel(nomes[i]);
             labels[i].setBounds(LBL_X, linhasY[i], LBL_W, LBL_H);
@@ -99,20 +128,13 @@ public class TelaPrincipal extends JFrame implements ActionListener {
         painel.add(txtDono);
         painel.add(txtTelefone);
 
-        // MUDANÇA 2: Botões reorganizados em duas fileiras centralizadas
-        // Fileira 1: Adicionar | Excluir | Consultar  (juntos, mesma largura)
-        // Fileira 2: Limpar Campos | Agendamento      (centralizados abaixo)
-
-        // Largura de cada botão da fileira 1 para caber os 3 juntos
+        // Medidas que armazenam o posicionamento dos botões para centralizar
         int btnLargura1 = 190;
-        // Posição X do primeiro botão para centralizar os 3 na janela (700px)
-        // Total ocupado: 3 * 190 + 2 * 10 (espaço entre eles) = 590
-        // Margem lateral: (700 - 590) / 2 = 55
-        int xInicio1 = 55;
+        int xInicio1    = 55;
         int espacamento = 10;
 
         btnAdicionar = criarBotao("Adicionar", COR_AMBAR, COR_FUNDO);
-        btnExcluir   = criarBotao("Excluir", COR_AZUL_MEDIO, COR_BRANCO);
+        btnExcluir   = criarBotao("Excluir",   COR_AZUL_MEDIO, COR_BRANCO);
         btnConsultar = criarBotao("Consultar", COR_AZUL_MEDIO, COR_BRANCO);
 
         btnAdicionar.setBounds(xInicio1, 265, btnLargura1, BTN_H);
@@ -123,13 +145,10 @@ public class TelaPrincipal extends JFrame implements ActionListener {
         painel.add(btnExcluir);
         painel.add(btnConsultar);
 
-        // Largura dos botões da fileira 2
         int btnLargura2 = 200;
-        // Total ocupado: 2 * 200 + 1 * 10 = 410
-        // Margem lateral: (700 - 410) / 2 = 145
-        int xInicio2 = 145;
+        int xInicio2    = 145;
 
-        btnLimpar     = criarBotao("Limpar Campos", COR_AZUL_MEDIO, COR_BRANCO);
+        btnLimpar      = criarBotao("Limpar Campos", COR_AZUL_MEDIO, COR_BRANCO);
         btnAgendamento = criarBotao("Agendamento →", COR_AMBAR, COR_FUNDO);
 
         btnLimpar.setBounds(xInicio2, 308, btnLargura2, BTN_H);
@@ -159,6 +178,7 @@ public class TelaPrincipal extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    // Métodos auxiliares que ao invés de reescrever os componentes, o método é chamado e padroniza tudo
     private JTextField criarCampo(int y) {
         JTextField f = new JTextField();
         f.setBounds(TXT_X, y, TXT_W, LBL_H);
@@ -183,15 +203,14 @@ public class TelaPrincipal extends JFrame implements ActionListener {
         if (e.getSource() == btnLimpar)     limparCampos();
 
         if (e.getSource() == btnAgendamento) {
-            dispose();
-            new TelaAgendamento(listaAnimais);
+            dispose(); // Fecha e tela principal
+            new TelaAgendamento(listaAnimais); // abre a tela de agendamento, passando a lista de animais registrados como um parêmetro
         }
-
-        // MUDANÇA 1: Removidos os blocos de btnAlterarCor e btnAlterarFonte
     }
 
     private void adicionarAnimal() {
-        String nome     = txtNome.getText().trim();
+    	// Captura o texto qur foi digitado e limpa o campo
+        String nome     = txtNome.getText().trim(); //.trim() -> remove os espaços em branco antes e depois da String
         String especie  = txtEspecie.getText().trim();
         String raca     = txtRaca.getText().trim();
         String nomeDono = txtDono.getText().trim();
@@ -202,8 +221,8 @@ public class TelaPrincipal extends JFrame implements ActionListener {
             return;
         }
 
-        Cliente dono   = new Cliente(nomeDono, tel, "");
-        Animal animal  = new Animal(nome, especie, raca, dono);
+        Cliente dono  = new Cliente(nomeDono, tel, "");
+        Animal animal = new Animal(nome, especie, raca, dono);
         listaAnimais.add(animal);
 
         areaExibicao.setText(
@@ -228,24 +247,20 @@ public class TelaPrincipal extends JFrame implements ActionListener {
         areaExibicao.setText("Animal " + nome + " não encontrado.");
     }
 
-    // MUDANÇA 3: Consultar agora exibe TODOS os animais cadastrados
-    // Cada animal aparece em um bloco separado por uma linha "---"
     public void consultarAnimal() {
 
-        // Verifica se a lista está vazia antes de tentar exibir
         if (listaAnimais.isEmpty()) {
             areaExibicao.setText("Nenhum animal cadastrado ainda.");
             return;
         }
 
+        // Permite que dentro ddo for seja contruído um texto
         StringBuilder resultado = new StringBuilder();
 
-        // Percorre todos os animais da lista, um por um
         for (int i = 0; i < listaAnimais.size(); i++) {
-
             Animal a = listaAnimais.get(i);
-
-            // Cabeçalho numerado para cada animal
+            
+            // método do STringBuilder que adiciona conteúdo ao finla do texto
             resultado.append("Animal ").append(i + 1).append(":\n");
             resultado.append("  Nome     : ").append(a.getNome()).append("\n");
             resultado.append("  Espécie  : ").append(a.getEspecie()).append("\n");
@@ -253,7 +268,6 @@ public class TelaPrincipal extends JFrame implements ActionListener {
             resultado.append("  Dono     : ").append(a.getDono().getNome()).append("\n");
             resultado.append("  Telefone : ").append(a.getDono().getTel()).append("\n");
 
-            // Linha separadora entre os blocos (exceto no último)
             if (i < listaAnimais.size() - 1) {
                 resultado.append("  -----------------------------------\n");
             }
@@ -269,6 +283,4 @@ public class TelaPrincipal extends JFrame implements ActionListener {
         txtDono.setText("");
         txtTelefone.setText("");
     }
-
-    // MUDANÇA 1: Métodos alterarCor() e alterarFonte() foram completamente removidos
 }
